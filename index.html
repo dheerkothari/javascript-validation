@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Validation</title>
+    <style>
+      body {
+        padding: 10px 50px;
+      }
+
+      .design {
+        font-size: 20px;
+      }
+
+      .design input[type="text"],
+      .design input[type="password"]{
+        width: 100px;
+        padding: 0px 10px;
+        border: 1px solid;
+        margin: 14px;
+        border-radius: 4px;
+        font-size: 15px;
+      }
+
+      #name,#address,#email{
+        width : 350px;
+      }
+
+      #zip{
+        width: 150px;
+      }
+
+      .design input[type="radio"],
+      .design input[type="checkbox"],
+      .design textarea,
+
+
+      .design select {
+        margin: 14px;
+
+      }
+
+
+      .error {
+        color: red;
+      }
+
+      .label {
+        width : 100px;
+        display: inline-block;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form>
+      <div class="design">
+        <label class="label">User id: </label><input type="text" id="user" />
+        <span
+          class="error"
+          id="user-error"
+        ></span>
+      </div>
+
+      <div class="design">
+        <label class="label">Password: </label><input type="password" id="pass" /><span
+          class="error"
+          id="pass-error"
+        ></span>
+      </div>
+
+      <div class="design">
+        <label class="label">Name: </label><input type="text" id="name" /><span
+          class="error"
+          id="name-error"
+        ></span>
+      </div>
+
+      <div class="design">
+        <label class="label">Address: </label><input type="text" id="address" />
+      </div>
+
+      <div class="design">
+        <label class="label">Country: </label>
+        <select id="country">
+          <option>Select Country</option>
+        </select>
+      </div>
+
+      <div class="design">
+        <label class="label">State: </label>
+        <select id="state">
+          <option>Select Country First</option>
+        </select>
+      </div>
+
+      <div class="design">
+        <label class="label">City: </label>
+        <select id="city">
+          <option>Select State First</option>
+        </select>
+      </div>
+
+      <div class="design">
+        <label class="label">ZIP Code: </label><input type="text" id="zip" /><span
+          class="error"
+          id="zip-error"
+        ></span>
+      </div>
+
+      <div class="design">
+        <label class="label">Email: </label><input type="text" id="email" /><span
+          class="error"
+          id="email-error"
+        ></span>
+      </div>
+
+      <div class="design">
+        <label class="label">Sex: </label><input type="radio" name="sex" value="male" />Male
+        <input type="radio" name="sex" value="female" />Female
+      </div>
+
+      <div class="design">
+        <label class="label">Language: </label><input type="checkbox" name="lan" value="english" />English
+        <input type="checkbox" name="lan" value="non english" />Non English
+      </div>
+
+      <div class="design">
+        <label class="label">About: </label><id ="about" />
+        <textarea rows="6" cols="30"></textarea>
+      </div>
+    </form>
+  </body>
+
+  <script>
+    (function () {
+      document.getElementById("user").oninput = (e) => {
+        const value = e.target.value;
+        if (value.length < 7 || value.length > 12) {
+          document.getElementById("user-error").innerHTML =
+            "User id must be greater than 7 and less than 12";
+        } else {
+          document.getElementById("user-error").innerHTML = "";
+        }
+      };
+
+      document.getElementById("pass").oninput = (e) => {
+        const value = e.target.value;
+        if (value.length < 6) {
+          document.getElementById("pass-error").innerHTML =
+            "Password must be at least 6 character long";
+        } else {
+          document.getElementById("pass-error").innerHTML = "";
+        }
+      };
+
+      document.getElementById("name").oninput = (e) => {
+        const value = e.target.value;
+
+        if (value.length < 4 || /([^0-9A-Za-z])+/g.test(value)) {
+          document.getElementById("name-error").innerHTML =
+            "Name must 4 character long and only alphanuric";
+        } else {
+          document.getElementById("name-error").innerHTML = "";
+        }
+      };
+
+      document.getElementById("zip").oninput = (e) => {
+        const value = e.target.value;
+
+        if (value.length < 5 || /([^0-9])+/g.test(value)) {
+          document.getElementById("zip-error").innerHTML =
+            "Zip-Code must 5 character long and only numeric value";
+        } else {
+          document.getElementById("zip-error").innerHTML = "";
+        }
+      };
+
+      document.getElementById("email").oninput = (e) => {
+        const value = e.target.value;
+
+        if (
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            value
+          )
+        ) {
+          document.getElementById("email-error").innerHTML =
+            "You have entered an invalid email address!";
+        } else {
+          document.getElementById("email-error").innerHTML = "";
+        }
+      };
+
+      const country = {
+        India: {
+          Gujarat: ["Ahmedabad", "Rajkot", "Surat", "Vadodra"],
+          Rajasthan: ["Abu", "Dungarpur", "Udaipur"],
+          Maharastra: ["Mumbai", "Pune"],
+        },
+
+        America: {
+          NewYork: ["New-York City", "Man-hattan"],
+          Niagara: ["Niagara Falls", "North Tonawanda"],
+          Texas: ["San Antonio", "Austin", "Dallas"],
+        },
+      };
+      let countryOptions = "<option>Select Country</option>";
+      let cityOptions = "<option>Select City</option>";
+
+      Object.keys(country).forEach((key) => {
+        countryOptions += "<option>" + key + "</option>";
+      });
+      document.getElementById("country").onchange = (e) => {
+        let stateOptions = "<option>Select State</option>";
+        const value = e.target.value;
+        Object.keys(country[value]).forEach((key) => {
+          stateOptions += "<option>" + key + "</option>";
+        });
+        document.getElementById("state").innerHTML = stateOptions;
+      };
+
+      document.getElementById("state").onchange = (e) => {
+        let cityOptions = "<option>Select City</option>";
+        const value = e.target.value;
+        const countryValue = document.getElementById("country").value;
+
+        if (countryValue && country[countryValue][value]) {
+          country[countryValue][value].forEach((key) => {
+            cityOptions += "<option>" + key + "</option>";
+          });
+        }
+
+        document.getElementById("city").innerHTML = cityOptions;
+      };
+      document.getElementById("country").innerHTML = countryOptions;
+    })();
+  </script>
+</html>
